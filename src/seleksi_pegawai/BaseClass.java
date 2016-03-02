@@ -13,7 +13,7 @@ import java.sql.SQLException;
  * @author ALFIANSAH
  */
 public class BaseClass extends javax.swing.JFrame {
-    protected String HakAkses;
+    protected static String HakAkses;
 
     public Connection koneksi() throws SQLException
     {

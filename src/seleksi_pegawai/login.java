@@ -2,6 +2,7 @@
 
 package seleksi_pegawai;
 
+import java.awt.HeadlessException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -22,44 +23,32 @@ public class login extends BaseClass {
 
 public void cekUser(){
     try
-{
-    koneksi objkoneksi = new koneksi();
-    Connection con = objkoneksi.bukakoneksi();
-    Statement stat = con.createStatement();
-    String sql = "Select access from tbl_user where username = '"+username.getText().trim()+"'"+"and password = '"+password.getText().trim()+"'";
-    ResultSet rs = stat.executeQuery(sql);
-//    if (rs.next()) {
-//        new menu_utama().setVisible(true);
-//        dispose();
-//        
-//    }
-    while (rs.next())
     {
-      this.HakAkses = rs.getString(1);
+        koneksi objkoneksi = new koneksi();
+        Connection con = objkoneksi.bukakoneksi();
+        Statement stat = con.createStatement();
+        String sql = "Select access from tbl_user where username = '"+username.getText().trim()+"'"+"and password = '"+password.getText().trim()+"'";
+        ResultSet rs = stat.executeQuery(sql);
+
+        while (rs.next())
+        {
+          this.HakAkses = rs.getString(1);
+        }
+        if(this.HakAkses == null)
+        {
+          JOptionPane.showMessageDialog(null,"Username dan Password Tidak Cocok","Peringatan",JOptionPane.WARNING_MESSAGE);  
+        }
+
+        else{
+        new menu_utama().setVisible(true);
+        dispose();
+        }
     }
-    if(this.HakAkses.equals(""))
-    {
-      JOptionPane.showMessageDialog(null,"Username dan Password Tidak Cocok","Peringatan",JOptionPane.WARNING_MESSAGE);  
-    }
-       
-    else{
-    new menu_utama().setVisible(true);
-    dispose();
-    }
-}
-   catch (Exception e){
+   catch (SQLException | HeadlessException e){
         System.out.println("kesalahan : "+e.toString());
     }
     
-//    else{
-//                JOptionPane.showMessageDialog(null,"Password Salah, ulangi password");
-//                String reset = "";
-//                password.setText(reset);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("KONEKSI GAGAL - " + e.toString());
-//
-//        }
+
 }
 
     
